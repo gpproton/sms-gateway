@@ -1,0 +1,45 @@
+version: '3'
+
+volumes:
+  playsms:
+
+services:
+  bearerbox:
+    container_name: bearerbox
+    hostname: bearerbox
+    image: ghrc.io/gpproton/kannel
+    privileged: true
+    restart: unless-stopped
+    build: .
+    entrypoint:
+      - /usr/sbin/bearerbox
+      - /etc/kannel/kannel.conf
+    volumes:
+      - ./kannel.conf:/etc/kannel/kannel.conf
+    ports:
+      - 13000:13000
+  smsbox:
+    container_name: smsbox
+    hostname: smsbox
+    image: ghrc.io/gpproton/kannel
+    restart: unless-stopped
+    build: .
+    entrypoint:
+      - /usr/sbin/smsbox
+      - /etc/kannel/kannel.conf
+    ports:
+      - 13001:13001
+      - 13013:13013
+    volumes:
+      - ./kannel.conf:/etc/kannel/kannel.conf
+
+  playsms:
+    container_name: playsms
+    hostname: playsms
+    image: playsms/playsms:1.4.5
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 2222:22
+    volumes:
+    - playsms:/var/lib/mysql
