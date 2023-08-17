@@ -43,4 +43,4 @@ services:
       - 80:80
       - 2222:22
     volumes:
-    - playsms:/var/lib/mysql
+    - "$STORE_ROOT/playsms:/var/lib/mysql"
