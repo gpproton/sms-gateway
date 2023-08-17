@@ -18,6 +18,7 @@ services:
       - ./kannel.conf:/etc/kannel/kannel.conf
     ports:
       - 13000:13000
+      - 13013:13013
   smsbox:
     container_name: smsbox
     hostname: smsbox
@@ -29,7 +30,7 @@ services:
       - /etc/kannel/kannel.conf
     ports:
       - 13001:13001
-      - 13013:13013
+      - 13131:13131
     volumes:
       - ./kannel.conf:/etc/kannel/kannel.conf
 
