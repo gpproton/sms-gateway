@@ -1,0 +1,67 @@
+version: "3"
+
+volumes:
+  playsms:
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    hostname: mysql
+    restart: unless-stopped
+    volumes:
+      - ./playsms/mysql:/etc/mysql/conf.d
+      - ${STORE_ROOT}/mysql/dump:/docker-entrypoint-initdb.d
+      - ${STORE_ROOT}/mysql/data:/var/lib/mysql
+    ports:
+      - 33061:3306
+    environment:
+      - TZ
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+
+  nginx:
+    image: ghcr.io/gpproton/playsms-nginx:${VERSION}
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    build:
+      context: ./playsms/web
+      dockerfile: Dockerfile
+    volumes:
+      - playsms:/var/www/html:ro
+      - playsms:/etc/nginx/conf.d/includes/
+    ports:
+      - ${HTTP_PORT}:80
+
+  playsms:
+    image: ghcr.io/gpproton/playsms:${VERSION}
+    container_name: playsms
+    hostname: playsms
+    restart: unless-stopped
+    build:
+      context: ./playsms
+      dockerfile: Dockerfile
+    volumes:
+      - playsms:/root/.composer/
+      - playsms:/var/www/data
+      - playsms:/var/www/html
+      - ./.env:/var/www/.env
+    environment:
+      - TZ
+      - ADMINPASSWORD
+      - DBUSER
+      - DBPASS
+      - DBNAME
+      - DBHOST
+      - DBPORT
+      - URLWEB
+      - PATHWEB
+      - PATHBIN
+      - PATHLOG
+      - PATHSTR
+      - PATHSRC
+      - PLAYSMS_WEB
+      - XDEBUG_CONFIG

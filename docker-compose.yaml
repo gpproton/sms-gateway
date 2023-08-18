@@ -4,7 +4,10 @@ services:
   bearerbox:
     container_name: bearerbox
     hostname: bearerbox
-    image: ghcr.io/gpproton/kannel:1.4.5-9
+    image: ghcr.io/gpproton/kannel:${VERSION}
+    build:
+      context: ./kannel
+      dockerfile: Dockerfile
     privileged: true
     restart: unless-stopped
     volumes:
@@ -12,12 +15,15 @@ services:
     ports:
       - 13000:13000
       - 13013:13013
+
   smsbox:
     container_name: smsbox
     hostname: smsbox
-    image: ghcr.io/gpproton/kannel:1.4.5-9
+    image: ghcr.io/gpproton/kannel:${VERSION}
+    build:
+      context: ./kannel
+      dockerfile: Dockerfile
     restart: unless-stopped
-    build: .
     entrypoint:
       - /usr/sbin/smsbox
       - /etc/kannel/kannel.conf
@@ -26,14 +32,3 @@ services:
       - 13131:13131
     volumes:
       - ./kannel.conf:/etc/kannel/kannel.conf
-
-  playsms:
-    container_name: playsms
-    hostname: playsms
-    image: playsms/playsms:1.4.5
-    restart: unless-stopped
-    ports:
-      - 8080:80
-      - 2222:22
-    volumes:
-    - "$STORE_ROOT/playsms:/var/lib/mysql"
