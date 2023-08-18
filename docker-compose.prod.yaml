@@ -17,7 +17,6 @@ services:
     hostname: smsbox
     image: ghcr.io/gpproton/kannel:1.4.5-9
     restart: unless-stopped
-    build: .
     entrypoint:
       - /usr/sbin/smsbox
       - /etc/kannel/kannel.conf
@@ -33,7 +32,7 @@ services:
     image: playsms/playsms:1.4.5
     restart: unless-stopped
     ports:
-      - 80:80
+      - 8080:80
       - 2222:22
     volumes:
     - "$STORE_ROOT/playsms:/var/lib/mysql"
