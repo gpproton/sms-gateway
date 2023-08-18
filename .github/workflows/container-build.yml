@@ -15,13 +15,13 @@ jobs:
         include:
           - context: './kannel'
             image: 'ghcr.io/gpproton/kannel'
-            dockerfile: ./Dockerfile
+            dockerfile: ./kannel/Dockerfile
           - context: './playsms'
             image: 'ghcr.io/gpproton/playsms'
-            dockerfile: ./Dockerfile
+            dockerfile: ./playsms/Dockerfile
           - context: './playsms/web'
             image: 'ghcr.io/gpproton/playsms-nginx'
-            dockerfile: ./Dockerfile
+            dockerfile: ./playsms/web/Dockerfile
     permissions:
       contents: read
       packages: write
