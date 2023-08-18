@@ -13,7 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: 'ghcr.io/gpproton/kannel'
+          - context: './kannel'
+            image: 'ghcr.io/gpproton/kannel'
+            dockerfile: ./Dockerfile
+          - context: './playsms'
+            image: 'ghcr.io/gpproton/playsms'
+            dockerfile: ./Dockerfile
+          - context: './playsms/web'
+            image: 'ghcr.io/gpproton/playsms-nginx'
             dockerfile: ./Dockerfile
     permissions:
       contents: read
@@ -53,7 +60,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
