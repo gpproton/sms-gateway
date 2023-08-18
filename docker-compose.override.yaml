@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
   mysql:
@@ -24,6 +24,7 @@ services:
     container_name: nginx
     hostname: nginx
     restart: unless-stopped
+    pull_policy: missing
     build:
       context: ./playsms/web
       dockerfile: Dockerfile
@@ -38,6 +39,7 @@ services:
     container_name: playsms
     hostname: playsms
     restart: unless-stopped
+    pull_policy: missing
     build:
       context: ./playsms
       dockerfile: Dockerfile
