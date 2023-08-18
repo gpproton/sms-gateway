@@ -1,8 +1,5 @@
 version: "3"
 
-volumes:
-  playsms:
-
 services:
   mysql:
     image: mysql:5.7
@@ -31,8 +28,8 @@ services:
       context: ./playsms/web
       dockerfile: Dockerfile
     volumes:
-      - playsms:/var/www/html:ro
-      - playsms:/etc/nginx/conf.d/includes/
+      - ${PLAYSMS_DATA}:/var/www/html:ro
+      - ${PLAYSMS_DATA}:/etc/nginx/conf.d/includes/
     ports:
       - ${HTTP_PORT}:80
 
@@ -45,9 +42,9 @@ services:
       context: ./playsms
       dockerfile: Dockerfile
     volumes:
-      - playsms:/root/.composer/
-      - playsms:/var/www/data
-      - playsms:/var/www/html
+      - ${PLAYSMS_DATA}:/root/.composer/
+      - ${PLAYSMS_DATA}:/var/www/data
+      - ${PLAYSMS_DATA}:/var/www/html
       - ./.env:/var/www/.env
     environment:
       - TZ
