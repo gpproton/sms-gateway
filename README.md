@@ -1,21 +1,22 @@
 # SMS Gateway (PlaySMS/Kannel)
 
-## Bootstrap setup
+## Clear & Bootstrap setup
 
 ```bash
 sudo rm -rf .docker && \
-cp kannel.sample.conf kannel.conf
+cp ./kannel/kannel.sample.conf kannel.conf && \
+cp .env.sample .env
 ```
 
 ## Adjust kannel configuration
 
-Apply necessary update to kannel.conf
+Apply necessary updates to kannel.conf and .env
 
 ```bash
 docker-compose up
 ```
 
-Then visit address => http://localhost/
+Then visit address => http://localhost:8081/
 
 ## Check Bearer status
 
