@@ -7,7 +7,7 @@ services:
   bearerbox:
     container_name: bearerbox
     hostname: bearerbox
-    image: ghrc.io/gpproton/kannel
+    image: ghcr.io/gpproton/kannel
     privileged: true
     restart: unless-stopped
     build: .
@@ -22,7 +22,7 @@ services:
   smsbox:
     container_name: smsbox
     hostname: smsbox
-    image: ghrc.io/gpproton/kannel
+    image: ghcr.io/gpproton/kannel
     restart: unless-stopped
     build: .
     entrypoint:
