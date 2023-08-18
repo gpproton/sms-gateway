@@ -13,7 +13,8 @@ cp .env.sample .env
 Apply necessary updates to kannel.conf and .env
 
 ```bash
-docker-compose up
+docker-compose up -d --no-build
+docker-compose logs -f
 ```
 
 Then visit address => http://localhost:8081/
