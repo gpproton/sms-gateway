@@ -1,4 +1,7 @@
-version: '3.9'
+networks:
+  default:
+    driver: bridge
+    name: sms-gateway
 
 services:
   bearerbox:
@@ -15,6 +18,8 @@ services:
     ports:
       - 13000:13000
       - 13013:13013
+    networks:
+      - default
 
   smsbox:
     container_name: smsbox
@@ -32,3 +37,5 @@ services:
       - 13131:13131
     volumes:
       - ./kannel.conf:/etc/kannel/kannel.conf
+    networks:
+      - default
